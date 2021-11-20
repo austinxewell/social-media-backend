@@ -17,7 +17,7 @@ const thoughtController = {
             });
     },
 
-    //get thought by id **NOT WORKING CORRECTLY**
+    //get thought by id
     getThoughtById({ params }, res) {
         Thought.findOne({ _id: params.thoughtId })
             .populate({
@@ -48,6 +48,23 @@ const thoughtController = {
                 { new: true, addValidators: true }
             );
         })
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: 'No user found with this id!' });
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => res.json(err));
+    },
+
+    // add a reaction
+    addReaction({ params, body }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $push: { reactions: body } },
+            { new: true, runValidators: true }
+        )
         .then(dbUserData => {
             if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id!' });
