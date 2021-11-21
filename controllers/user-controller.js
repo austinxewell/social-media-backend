@@ -39,7 +39,8 @@ const userController = {
     },
 
     //create User
-    createUser({ body}, res) {
+    createUser({ body }, res) {
+        console.log(body)
         User.create(body)
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.status(400).json(err));
@@ -72,10 +73,27 @@ const userController = {
     },
 
     //add friend
-    addFriend({ params, body }, res) {
+    addFriend({ params }, res) {
         User.findByIdAndUpdate(
             { _id: params.userId},
-            { $push: { friends: body } },
+            { $push: { friends: params.friendsId } },
+            { new: true, runValidators: true }
+        )
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.satus(404).json({ message: 'No user found with this id'});
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => res.json(err));
+    },
+
+    //delete friend
+    deleteFriend({ params }, res) {
+        User.findByIdAndUpdate(
+            { _id: params.userId},
+            { $pull: { friends: params.friendsId } },
             { new: true, runValidators: true }
         )
         .then(dbUserData => {
@@ -87,6 +105,7 @@ const userController = {
         })
         .catch(err => res.json(err));
     }
+
 }
 
 module.exports = userController;

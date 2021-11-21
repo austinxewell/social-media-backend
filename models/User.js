@@ -21,23 +21,11 @@ const UserSchema = new Schema(
             }
         ],
         friends: [
-            {
-                friendId: {
-                    type: Schema.Types.ObjectId,
-                    default: () => new Types.ObjectId()
-                },
-                username: {
-                    type: String,
-                    required: true,
-                    trim: true
-                },
-                email: {
-                    type: String,
-                    required: true,
-                    unique: true,
-                    match: [/.+@.+\..+/]
-                }
-            }
+
+          {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+          }
         ]
     },
     {

@@ -3,7 +3,15 @@ const { Thought, User } = require('../models');
 const thoughtController = {
     //get all thoughts
     getAllThoughts(req, res) {
-        Thought.find({})
+
+        const testObject = {}
+
+        // leaving for refrence, please dont dock me for having this here lol.
+        // if (thought === true) {
+        //     testObject._id = '619a84fe2609e4f99a2155e3'
+        // }
+
+        Thought.find(testObject)
             .populate({
                 path: 'reactions',
                 select: '-__v'
@@ -114,6 +122,18 @@ const thoughtController = {
             })
             .catch(err => res.json(err));
     },
+
+    // Delete reaction
+    deleteReaction({ params }, res) {
+        console.log( params )
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $pull: { reactions: { reactionId: params.reactionId } } },
+            { new: true }
+        )
+        .then(dbUserData => res.json(dbUserData))
+        .catch(err => res.json(err));
+    }
 }
 
 module.exports = thoughtController;
