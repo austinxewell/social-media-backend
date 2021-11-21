@@ -4,7 +4,7 @@
   This is the back end for a Social Media web application. It allows you to create Users, Thoughts, Reactions to thoughts and add users to a friends list. This back end functionality follows all CRUD methods and allows you to do so across all data tables. Here are some walkthough links showing how those routes function.
 
 https://watch.screencastify.com/v/jVyjNIDVkWsu5saq44KT (user routes)
-https://watch.screencastify.com/v/wuZ1HNO3gtqgHJMGR0R5 (tought/reaction routes)
+https://watch.screencastify.com/v/wuZ1HNO3gtqgHJMGR0R5 (thought/reaction routes)
 https://watch.screencastify.com/v/1sO1Zdf9VVq81gZ5UvFV (friend routes)
 
   # Table of Contents
